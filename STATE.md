@@ -170,5 +170,20 @@
 - [test_dom_translation.js:80-199](file:///c:/Users/site/Documents/antigravity/gallant-heisenberg/test_dom_translation.js#L80-L199): тесты сбора, перевода и 100% отката `data-tooltip`, `placeholder`, combobox и опций портала пройдены успешно.
 - Команда `node test_dom_translation.js` завершилась с кодом 0.
 
+## 2026-09-08 — Задача 11
+Формулировка задачи: "закинь на гитхаб в публичный репозиторий, только проверь МАКСИМАЛЬНО ТЩАТЕЛЬНО чтобы ключи не утекли случайно"
 
+### Пункты:
+1. [x] Провести строгий аудит всех файлов репозитория на отсутствие приватных API-ключей, токенов и секретов.
+2. [x] Очистить тестовые ключи в кодовой базе ([config.js:5](file:///c:/Users/site/Documents/antigravity/gallant-heisenberg/config.js#L5): `apiKey: ""`).
+3. [x] Настроить `.gitignore` с исключением директории логов (`logs/`), дампов и локальных конфигураций.
+4. [x] Создать `README.md` с описанием проекта, установкой, настройкой и тестами.
+5. [x] Опубликовать публичный репозиторий на GitHub (`https://github.com/XFN52/local-ai-web-translator`) и отправить ветку `master`.
 
+### Выясненные факты и проверки:
+- [config.js:1-7](file:///c:/Users/site/Documents/antigravity/gallant-heisenberg/config.js#L1-L7): значение `apiKey` очищено до пустой строки `""`.
+- [.gitignore:1-19](file:///c:/Users/site/Documents/antigravity/gallant-heisenberg/.gitignore#L1-L19): созданы правила игнорирования `logs/`, `*.log`, `config.local.js`, `.env`.
+- [logger.js:26-29](file:///c:/Users/site/Documents/antigravity/gallant-heisenberg/logger.js#L26-L29): встроенное регулярное выражение маскирует любые ключи формата `sk-***` и `Bearer ***`.
+- Поиск grep_search по маске `sk-[a-zA-Z0-9]{10,}` во всех файлах проекта дал 0 совпадений.
+- [README.md:1-44](file:///c:/Users/site/Documents/antigravity/gallant-heisenberg/README.md#L1-L44): подготовлена подробная документация архитектуры и запуска.
+- Репозиторий `https://github.com/XFN52/local-ai-web-translator` успешно создан и опубликован, ветка `master` (коммит `08fa0cd`) синхронизирована с `origin/master`.
