@@ -187,3 +187,18 @@
 - Поиск grep_search по маске `sk-[a-zA-Z0-9]{10,}` во всех файлах проекта дал 0 совпадений.
 - [README.md:1-44](file:///c:/Users/site/Documents/antigravity/gallant-heisenberg/README.md#L1-L44): подготовлена подробная документация архитектуры и запуска.
 - Репозиторий `https://github.com/XFN52/local-ai-web-translator` успешно создан и опубликован, ветка `master` (коммит `08fa0cd`) синхронизирована с `origin/master`.
+
+## 2026-09-08 — Задача 12
+Формулировка задачи: "сео сделай для репозитория"
+
+### Пункты:
+1. [x] Настроить метаданные GitHub-репозитория (description, 19 тематических тегов topics, homepageUrl) через GitHub CLI (`gh repo edit`).
+2. [x] Добавить лицензию открытого исходного кода [LICENSE:1-22](file:///c:/Users/site/Documents/antigravity/gallant-heisenberg/LICENSE#L1-L22) (MIT License) для индексации и отображения плашки в GitHub.
+3. [x] Переработать [README.md:1-143](file:///c:/Users/site/Documents/antigravity/gallant-heisenberg/README.md#L1-L143) под поисковую оптимизацию: бейджи статуса, многоязычные ключевые фразы (EN/RU/ZH), таблица сравнения с Google Translate, схема архитектуры, матрица совместимости бэкендов (Ollama, LM Studio, vLLM) и рекомендуемых моделей (Qwen 2.5, DeepSeek, Gemini).
+4. [x] Зафиксировать изменения в git и отправить в ветку `master` на GitHub.
+
+### Выясненные факты и проверки:
+- Метаданные репозитория `XFN52/local-ai-web-translator` обновлены: установлено SEO-описание ("Lightweight Chrome Extension (Manifest V3)..."), домашняя страница и 19 топиков (`chrome-extension`, `web-translator`, `chinese-to-russian`, `local-ai`, `llm`, `ollama`, `lm-studio`, `vllm`, `deepseek`, `qwen`, `manifest-v3`, `translation`, `browser-extension`, `spa`, `react`, `semi-ui`, `openai-compatible`, `dom-safe`, `ai-translator`).
+- [LICENSE:1-22](file:///c:/Users/site/Documents/antigravity/gallant-heisenberg/LICENSE#L1-L22): добавлена лицензия MIT Copyright (c) 2026 XFN52.
+- [README.md:1-143](file:///c:/Users/site/Documents/antigravity/gallant-heisenberg/README.md#L1-L143): структура обогащена бейджами, трехъязычными поисковыми маркерами, таблицей преимуществ, ASCII-схемой потока данных и инструкциями.
+- `node test_dom_translation.js` завершился с кодом 0 (100% прохождение тестов).
