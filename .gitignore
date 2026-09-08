@@ -1,0 +1,18 @@
+﻿# Logs
+logs/
+*.log
+
+# Local secrets & environment
+config.local.js
+.env
+.env.*
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE & Editor
+.idea/
+.vscode/
+*.swp

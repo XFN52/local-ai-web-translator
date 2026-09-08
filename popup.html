@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Local AI Translator</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #38bdf8;
+      --primary-hover: #0284c7;
+      --success: #10b981;
+      --danger: #ef4444;
+      --border: #334155;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      width: 320px;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 13px;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    h1 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge {
+      font-size: 10px;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--primary);
+      padding: 2px 6px;
+      border-radius: 10px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    .btn-group {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    button {
+      flex: 1;
+      padding: 9px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: #0f172a;
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      color: #fff;
+    }
+    .btn-secondary {
+      background: var(--card-bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover {
+      background: #283548;
+    }
+    .field {
+      margin-bottom: 10px;
+    }
+    label {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    input {
+      width: 100%;
+      padding: 7px 10px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 12px;
+      outline: none;
+    }
+    input:focus {
+      border-color: var(--primary);
+    }
+    .settings-toggle {
+      font-size: 11px;
+      color: var(--text-muted);
+      cursor: pointer;
+      text-decoration: underline;
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+    .settings-panel {
+      display: none;
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid var(--border);
+      padding: 10px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+    .settings-panel.open {
+      display: block;
+    }
+    .status-box {
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 32px;
+    }
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      flex-shrink: 0;
+    }
+    .status-dot.active {
+      background: var(--success);
+    }
+    .status-dot.error {
+      background: var(--danger);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Local AI Translator <span class="badge">ZH → RU</span></h1>
+  </header>
+
+  <div class="btn-group">
+    <button id="translateBtn" class="btn-primary">Перевести</button>
+    <button id="restoreBtn" class="btn-secondary">Оригинал</button>
+  </div>
+
+  <span id="toggleSettings" class="settings-toggle">Настройки API</span>
+
+  <div id="settingsPanel" class="settings-panel">
+    <div class="field">
+      <label for="apiUrl">API URL (OpenAI-compatible):</label>
+      <input type="text" id="apiUrl" placeholder="http://localhost:8045/v1/chat/completions">
+    </div>
+
+    <div class="field">
+      <label for="apiKey">API Key (Bearer token):</label>
+      <input type="password" id="apiKey" placeholder="sk-...">
+    </div>
+
+    <div class="field">
+      <label for="model">Модель:</label>
+      <input type="text" id="model" placeholder="gemini-3.8-flash-low">
+    </div>
+
+    <div class="field">
+      <label for="batchSize">Размер пачки (узлов):</label>
+      <input type="number" id="batchSize" min="5" max="50" value="20">
+    </div>
+
+    <div class="field" style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+      <span id="cacheStats" style="font-size: 11px; color: var(--text-muted);">Кэш: 0 записей</span>
+      <button id="clearCacheBtn" class="btn-secondary" style="flex: 0 0 auto; font-size: 10px; padding: 4px 8px;">Очистить кэш</button>
+    </div>
+
+    <div class="btn-group" style="margin-bottom: 0;">
+      <button id="testApiBtn" class="btn-secondary" style="font-size: 11px; padding: 6px;">Проверить API</button>
+      <button id="saveSettingsBtn" class="btn-secondary" style="font-size: 11px; padding: 6px;">Сохранить</button>
+    </div>
+  </div>
+
+  <div class="status-box">
+    <span id="statusDot" class="status-dot"></span>
+    <span id="statusText">Готов к переводу</span>
+  </div>
+
+  <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 11px;">
+    <a href="http://127.0.0.1:8046/logs" target="_blank" style="color: var(--primary); text-decoration: none;">📄 Открыть файл логов</a>
+    <span id="downloadLogsBtn" style="color: var(--text-muted); cursor: pointer; text-decoration: underline;">Экспорт</span>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
